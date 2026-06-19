@@ -2,17 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>TeknoBiblik | Historia del Techno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeknoBiblik</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #0a0a0f;
             color: #e2e2e6;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             overflow: hidden;
             height: 100vh;
-            width: 100vw;
         }
         .splash {
             position: fixed;
@@ -25,7 +24,7 @@
             align-items: center;
             justify-content: center;
             z-index: 5000;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
             text-align: center;
             flex-direction: column;
         }
@@ -35,13 +34,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
         }
-        .splash p {
-            color: #00f0ff;
-            letter-spacing: 4px;
-            font-size: 0.8rem;
-        }
+        .splash p { color: #00f0ff; letter-spacing: 4px; font-size: 0.8rem; margin-top: 10px; }
         .carousel {
             display: flex;
             overflow-x: auto;
@@ -64,8 +58,6 @@
         .slide h2 { font-size: 2rem; margin: 15px 0; color: white; }
         .slide p { font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; text-align: justify; }
         .artists { background: #050508; padding: 12px 15px; border-left: 3px solid #374151; margin: 15px 0; }
-        .artists h4 { font-size: 0.8rem; margin-bottom: 5px; }
-        .artists p { font-size: 0.85rem; margin: 0; }
         .music-player { background: #000; border: 1px solid #2a2a35; padding: 15px; border-radius: 8px; margin: 15px 0; }
         .music-player h5 { color: #00f0ff; font-size: 0.8rem; margin-bottom: 8px; }
         .track-title { font-weight: bold; font-size: 1rem; }
@@ -73,14 +65,14 @@
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 10px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .video-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-        .video-link-btn { background: #18181f; color: #e2e2e6; padding: 6px 12px; text-decoration: none; font-size: 0.7rem; border: 1px solid #333; transition: 0.2s; display: inline-block; }
+        .video-link-btn { background: #18181f; color: #e2e2e6; padding: 6px 12px; text-decoration: none; font-size: 0.7rem; border: 1px solid #333; display: inline-block; }
         .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; }
         .nav-buttons { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 20px; z-index: 100; }
-        .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.9rem; }
+        .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; }
         .nav-btn:hover { background: #00f0ff22; }
         .dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0faa; padding: 5px 12px; border-radius: 40px; }
-        .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
-        .dot.active { background: #00f0ff; box-shadow: 0 0 8px cyan; width: 20px; border-radius: 10px; }
+        .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; }
+        .dot.active { background: #00f0ff; width: 20px; border-radius: 10px; }
         .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.7); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff33; }
         .voice-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; border-radius: 30px; }
         .voice-btn:hover { background: #00f0ff22; }
@@ -159,13 +151,12 @@
 
 <div id="mainCarousel" style="display: none;">
     <div class="carousel" id="carousel">
-        <!-- SLIDE 1 -->
         <div class="slide" data-index="0">
             <div class="slide-content">
                 <span class="era-tag">CAPITULO I // FINALES DE LOS 70</span>
                 <h2>La Fundacion Prototipica</h2>
-                <p>El techno no nacio en el vacio; fue la respuesta humana a la automatizacion. En Detroit, la juventud afroamericana sintonizaba el programa de radio de The Electrifying Mojo, que emitia funk, pop y la fria precision electronica de los alemanes Kraftwerk. Al mismo tiempo, Giorgio Moroder y Donna Summer demostraban el poder de los sintetizadores.</p>
-                <div class="artists"><h4>Pioneros de la Era:</h4><p>Kraftwerk, Giorgio Moroder, Yellow Magic Orchestra</p></div>
+                <p>El techno no nacio en el vacio; fue la respuesta humana a la automatizacion. En Detroit, la juventud afroamericana sintonizaba el programa de radio de The Electrifying Mojo, que emitia funk, pop y la fria precision electronica de los alemanes Kraftwerk.</p>
+                <div class="artists"><h4>Pioneros:</h4><p>Kraftwerk, Giorgio Moroder, Yellow Magic Orchestra</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA I</h5>
                     <div class="track-title">Trans-Europe Express</div>
@@ -175,13 +166,12 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 2 -->
         <div class="slide" data-index="1">
             <div class="slide-content">
                 <span class="era-tag">CAPITULO II // DECADA DE LOS 80</span>
                 <h2>The Belleville Three</h2>
-                <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR-808 y TR-909. Atkins, como Model 500, lanzo No UFOs en 1985. El sonido combinaba alienacion urbana con funk, bautizado como Techno.</p>
-                <div class="artists"><h4>La Santisima Trinidad de Detroit:</h4><p>Juan Atkins, Derrick May, Kevin Saunderson</p></div>
+                <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR-808 y TR-909. Atkins, como Model 500, lanzo No UFOs en 1985.</p>
+                <div class="artists"><h4>La Trinidad:</h4><p>Juan Atkins, Derrick May, Kevin Saunderson</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA II</h5>
                     <div class="track-title">Clear</div>
@@ -191,13 +181,12 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 3 -->
         <div class="slide" data-index="2">
             <div class="slide-content">
                 <span class="era-tag">CAPITULO III // DECADA DE LOS 90</span>
                 <h2>Underground Resistance</h2>
-                <p>El colectivo Underground Resistance (UR) radicalizo el movimiento con pasamontanas, producciones crudas de Jeff Mills y Robert Hood. El techno se expandio por Europa tras la caida del Muro de Berlin.</p>
-                <div class="artists"><h4>Arquitectos del Sonido:</h4><p>Jeff Mills, Robert Hood, Mike Banks</p></div>
+                <p>El colectivo Underground Resistance (UR) radicalizo el movimiento con pasamontanas, producciones crudas de Jeff Mills y Robert Hood.</p>
+                <div class="artists"><h4>Arquitectos:</h4><p>Jeff Mills, Robert Hood, Mike Banks</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA III</h5>
                     <div class="track-title">Live at Liquid Room</div>
@@ -207,12 +196,11 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 4 -->
         <div class="slide" data-index="3">
             <div class="slide-content">
                 <span class="era-tag">CAPITULO IV // SIGLO XXI</span>
                 <h2>La Conquista Global</h2>
-                <p>El techno se consolido internacionalmente. Himnos como Born Slippy de Underworld, Energy Flash de Joey Beltram y Crispy Bacon de Laurent Garnier trascendieron fronteras.</p>
+                <p>El techno se consolido internacionalmente. Himnos como Born Slippy, Energy Flash y Crispy Bacon trascendieron fronteras.</p>
                 <div class="artists"><h4>Embajadores:</h4><p>Underworld, Laurent Garnier, Richie Hawtin</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA IV</h5>
@@ -250,7 +238,7 @@
 
 <script>
     // ============================================================
-    // SIMPLE Y FUNCIONAL - SIN DEPENDENCIAS EXTERNAS
+    // TeknoBiblik - SIMPLE Y FUNCIONAL
     // ============================================================
     
     // Mostrar el modal de terminos
@@ -336,7 +324,7 @@
         setTimeout(function() { goToSlide(0); }, 100);
     }
 
-    // Lector de voz (simple)
+    // Lector de voz
     var speechSynth = window.speechSynthesis;
     var isReading = false;
 
@@ -369,9 +357,8 @@
         isReading = false;
     }
 
-    // Eventos
+    // Carga inicial
     window.addEventListener('load', function() {
-        // Splash rapido
         setTimeout(function() {
             var splash = document.getElementById('splash');
             if (splash) {
