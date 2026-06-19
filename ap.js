@@ -1,5 +1,4 @@
 // ============================================================
-// app.js - Archivo de respaldo para TeknoBiblik
+// app.js - TeknoBiblik (archivo de respaldo)
 // ============================================================
-// Toda la logica esta integrada en index.html
 console.log('app.js cargado correctamente');
