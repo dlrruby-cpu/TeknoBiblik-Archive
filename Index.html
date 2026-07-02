@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeknoBiblik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TeknoBiblik™ | Historia del Techno by LópezDjTools</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #0a0a0f;
             color: #e2e2e6;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             overflow: hidden;
             height: 100vh;
+            width: 100vw;
         }
+        /* Splash */
         .splash {
             position: fixed;
             top: 0;
@@ -24,7 +26,7 @@
             align-items: center;
             justify-content: center;
             z-index: 5000;
-            transition: opacity 0.3s;
+            transition: opacity 0.5s ease;
             text-align: center;
             flex-direction: column;
         }
@@ -34,8 +36,14 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 10px;
         }
-        .splash p { color: #00f0ff; letter-spacing: 4px; font-size: 0.8rem; margin-top: 10px; }
+        .splash p {
+            color: #00f0ff;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+        }
+        /* Carrusel */
         .carousel {
             display: flex;
             overflow-x: auto;
@@ -44,7 +52,12 @@
             scroll-behavior: smooth;
             height: 100vh;
             width: 100vw;
+            scrollbar-width: thin;
+            scrollbar-color: #00f0ff #1a1a2e;
         }
+        .carousel::-webkit-scrollbar { height: 6px; }
+        .carousel::-webkit-scrollbar-track { background: #1a1a2e; }
+        .carousel::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; }
         .slide {
             flex: 0 0 100%;
             scroll-snap-align: start;
@@ -58,6 +71,8 @@
         .slide h2 { font-size: 2rem; margin: 15px 0; color: white; }
         .slide p { font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; text-align: justify; }
         .artists { background: #050508; padding: 12px 15px; border-left: 3px solid #374151; margin: 15px 0; }
+        .artists h4 { font-size: 0.8rem; margin-bottom: 5px; }
+        .artists p { font-size: 0.85rem; margin: 0; }
         .music-player { background: #000; border: 1px solid #2a2a35; padding: 15px; border-radius: 8px; margin: 15px 0; }
         .music-player h5 { color: #00f0ff; font-size: 0.8rem; margin-bottom: 8px; }
         .track-title { font-weight: bold; font-size: 1rem; }
@@ -68,16 +83,17 @@
         .video-link-btn { background: #18181f; color: #e2e2e6; padding: 6px 12px; text-decoration: none; font-size: 0.7rem; border: 1px solid #333; display: inline-block; }
         .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; }
         .nav-buttons { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 20px; z-index: 100; }
-        .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; }
+        .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.9rem; }
         .nav-btn:hover { background: #00f0ff22; }
         .dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0faa; padding: 5px 12px; border-radius: 40px; }
-        .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; }
-        .dot.active { background: #00f0ff; width: 20px; border-radius: 10px; }
+        .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .dot.active { background: #00f0ff; box-shadow: 0 0 8px cyan; width: 20px; border-radius: 10px; }
         .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.7); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff33; }
         .voice-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; border-radius: 30px; }
         .voice-btn:hover { background: #00f0ff22; }
         .admin-btn { position: fixed; bottom: 20px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; z-index: 200; border-radius: 20px; }
         .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
+        /* Modal de términos (aparece tras 1 minuto) */
         .overlay {
             position: fixed;
             top: 0;
@@ -138,90 +154,97 @@
 </head>
 <body>
 
+<!-- Elementos flotantes (ocultos hasta aceptar) -->
 <div class="voice-buttons" style="display: none;" id="voiceButtons">
-    <button id="readBtn" class="voice-btn">Leer</button>
-    <button id="stopBtn" class="voice-btn">Parar</button>
+    <button id="readBtn" class="voice-btn">🔊 Leer</button>
+    <button id="stopBtn" class="voice-btn">⏹️ Parar</button>
 </div>
-<div class="admin-btn" id="adminUnlockBtn" style="display: none;">Admin</div>
+<div class="admin-btn" id="adminUnlockBtn" style="display: none;">🔓 Admin</div>
 
+<!-- Splash -->
 <div id="splash" class="splash">
-    <h1>TeknoBiblik</h1>
-    <p>by LopezDjTools</p>
+    <h1>TeknoBiblik™</h1>
+    <p>by LópezDjTools</p>
 </div>
 
+<!-- Carrusel (contenido principal) oculto hasta aceptar -->
 <div id="mainCarousel" style="display: none;">
     <div class="carousel" id="carousel">
+        <!-- SLIDE 1: 70s -->
         <div class="slide" data-index="0">
             <div class="slide-content">
-                <span class="era-tag">CAPITULO I // FINALES DE LOS 70</span>
-                <h2>La Fundacion Prototipica</h2>
-                <p>El techno no nacio en el vacio; fue la respuesta humana a la automatizacion. En Detroit, la juventud afroamericana sintonizaba el programa de radio de The Electrifying Mojo, que emitia funk, pop y la fria precision electronica de los alemanes Kraftwerk.</p>
+                <span class="era-tag">CAPÍTULO I // FINALES DE LOS 70</span>
+                <h2>La Fundación Prototípica</h2>
+                <p>El techno no nació en el vacío; fue la respuesta humana a la automatización. En Detroit, la juventud afroamericana sintonizaba el programa de radio de <strong>The Electrifying Mojo</strong>, que emitía funk, pop y la fría precisión electrónica de los alemanes <strong>Kraftwerk</strong>. Al mismo tiempo, Giorgio Moroder y Donna Summer demostraban el poder de los sintetizadores.</p>
                 <div class="artists"><h4>Pioneros:</h4><p>Kraftwerk, Giorgio Moroder, Yellow Magic Orchestra</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA I</h5>
-                    <div class="track-title">Trans-Europe Express</div>
+                    <div class="track-title">Trans‑Europe Express</div>
                     <div class="track-artist">Kraftwerk</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/zOfh7YdugzQ?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/zOfh7YdugzQ" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/zOfh7YdugzQ" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
             </div>
         </div>
+        <!-- SLIDE 2: 80s -->
         <div class="slide" data-index="1">
             <div class="slide-content">
-                <span class="era-tag">CAPITULO II // DECADA DE LOS 80</span>
+                <span class="era-tag">CAPÍTULO II // DÉCADA DE LOS 80</span>
                 <h2>The Belleville Three</h2>
-                <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR-808 y TR-909. Atkins, como Model 500, lanzo No UFOs en 1985.</p>
+                <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR‑808 y TR‑909. Atkins, como Model 500, lanzó "No UFOs" en 1985. El sonido combinaba alienación urbana con funk, bautizado como "Techno".</p>
                 <div class="artists"><h4>La Trinidad:</h4><p>Juan Atkins, Derrick May, Kevin Saunderson</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA II</h5>
                     <div class="track-title">Clear</div>
-                    <div class="track-artist">Cybotron</div>
+                    <div class="track-artist">Cybotron (Juan Atkins)</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/pFHXrKzNEww?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/pFHXrKzNEww" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/pFHXrKzNEww" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
             </div>
         </div>
+        <!-- SLIDE 3: 90s -->
         <div class="slide" data-index="2">
             <div class="slide-content">
-                <span class="era-tag">CAPITULO III // DECADA DE LOS 90</span>
+                <span class="era-tag">CAPÍTULO III // DÉCADA DE LOS 90</span>
                 <h2>Underground Resistance</h2>
-                <p>El colectivo Underground Resistance (UR) radicalizo el movimiento con pasamontanas, producciones crudas de Jeff Mills y Robert Hood.</p>
+                <p>El colectivo Underground Resistance (UR) radicalizó el movimiento con pasamontañas, producciones crudas de Jeff Mills y Robert Hood. El techno se expandió por Europa tras la caída del Muro de Berlín.</p>
                 <div class="artists"><h4>Arquitectos:</h4><p>Jeff Mills, Robert Hood, Mike Banks</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA III</h5>
-                    <div class="track-title">Live at Liquid Room</div>
+                    <div class="track-title">Live at Liquid Room (1995)</div>
                     <div class="track-artist">Jeff Mills</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/VWlcVRmfUXo?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/VWlcVRmfUXo" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/VWlcVRmfUXo" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
             </div>
         </div>
+        <!-- SLIDE 4: 2000s -->
         <div class="slide" data-index="3">
             <div class="slide-content">
-                <span class="era-tag">CAPITULO IV // SIGLO XXI</span>
+                <span class="era-tag">CAPÍTULO IV // SIGLO XXI</span>
                 <h2>La Conquista Global</h2>
-                <p>El techno se consolido internacionalmente. Himnos como Born Slippy, Energy Flash y Crispy Bacon trascendieron fronteras.</p>
+                <p>El techno se consolidó internacionalmente. Himnos como "Born Slippy" de Underworld, "Energy Flash" de Joey Beltram y "Crispy Bacon" de Laurent Garnier trascendieron fronteras.</p>
                 <div class="artists"><h4>Embajadores:</h4><p>Underworld, Laurent Garnier, Richie Hawtin</p></div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA IV</h5>
                     <div class="track-title">Born Slippy .NUXX</div>
                     <div class="track-artist">Underworld</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/krN3ledny-Y?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/krN3ledny-Y" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/krN3ledny-Y" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA V</h5>
                     <div class="track-title">Energy Flash</div>
                     <div class="track-artist">Joey Beltram</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/p7UBpvYjZSQ?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/p7UBpvYjZSQ" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/p7UBpvYjZSQ" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
                 <div class="music-player">
                     <h5>EVIDENCIA SONORA VI</h5>
-                    <div class="track-title">Crispy Bacon</div>
+                    <div class="track-title">Crispy Bacon (Live in Paris)</div>
                     <div class="track-artist">Laurent Garnier</div>
                     <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/7cmvLOavQ5k?rel=0" frameborder="0" allowfullscreen></iframe></div>
-                    <div class="video-buttons"><a href="https://youtu.be/7cmvLOavQ5k" target="_blank" class="video-link-btn">Abrir en YouTube</a></div>
+                    <div class="video-buttons"><a href="https://youtu.be/7cmvLOavQ5k" target="_blank" class="video-link-btn">📺 Abrir en YouTube</a></div>
                 </div>
             </div>
         </div>
@@ -234,155 +257,9 @@
     <div class="dots" id="dotsContainer"></div>
 </div>
 
-<footer>TeknoBiblik by LopezDjTools | MIT License</footer>
+<footer>TeknoBiblik™ by LópezDjTools | Licencia MIT</footer>
 
-<script>
-    // ============================================================
-    // TeknoBiblik - SIMPLE Y FUNCIONAL
-    // ============================================================
-    
-    // Mostrar el modal de terminos
-    function showTerms() {
-        var modal = document.createElement('div');
-        modal.className = 'overlay';
-        modal.id = 'termsModal';
-        modal.innerHTML = `
-            <div class="overlay-content">
-                <h2>TeknoBiblik</h2>
-                <h3>by LopezDjTools</h3>
-                <div class="legal-text">
-                    <p><strong>AVISO LEGAL</strong></p>
-                    <p>1. Aceptacion de terminos: Al acceder acepta estos terminos.</p>
-                    <p>2. Videos de YouTube: Pertenecen a sus propietarios.</p>
-                    <p>3. Privacidad: No recopilamos datos personales.</p>
-                    <p>4. Periodo de prueba: 72 horas.</p>
-                </div>
-                <button id="acceptBtn">ACEPTO Y ACCEDO</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        document.getElementById('acceptBtn').onclick = function() {
-            modal.remove();
-            startApp();
-        };
-    }
-
-    // Iniciar la aplicacion
-    function startApp() {
-        document.getElementById('mainCarousel').style.display = 'block';
-        document.getElementById('voiceButtons').style.display = 'flex';
-        document.getElementById('adminUnlockBtn').style.display = 'block';
-        initCarousel();
-    }
-
-    // Carrusel
-    function initCarousel() {
-        var carousel = document.getElementById('carousel');
-        var prev = document.getElementById('prevBtn');
-        var next = document.getElementById('nextBtn');
-        var dotsContainer = document.getElementById('dotsContainer');
-        var slides = document.querySelectorAll('.slide');
-        var currentIndex = 0;
-
-        function updateDots() {
-            var dots = document.querySelectorAll('.dot');
-            dots.forEach(function(dot, idx) {
-                if (idx === currentIndex) dot.classList.add('active');
-                else dot.classList.remove('active');
-            });
-        }
-
-        function goToSlide(index) {
-            if (index < 0) index = 0;
-            if (index >= slides.length) index = slides.length - 1;
-            currentIndex = index;
-            carousel.scrollTo({ left: currentIndex * window.innerWidth, behavior: 'smooth' });
-            updateDots();
-        }
-
-        var scrollTimeout;
-        carousel.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                var newIndex = Math.round(carousel.scrollLeft / window.innerWidth);
-                if (newIndex !== currentIndex) { currentIndex = newIndex; updateDots(); }
-            }, 100);
-        });
-
-        prev.addEventListener('click', function() { goToSlide(currentIndex - 1); });
-        next.addEventListener('click', function() { goToSlide(currentIndex + 1); });
-
-        slides.forEach(function(_, idx) {
-            var dot = document.createElement('div');
-            dot.className = 'dot';
-            if (idx === 0) dot.classList.add('active');
-            dot.addEventListener('click', function() { goToSlide(idx); });
-            dotsContainer.appendChild(dot);
-        });
-
-        window.addEventListener('resize', function() { goToSlide(currentIndex); });
-        setTimeout(function() { goToSlide(0); }, 100);
-    }
-
-    // Lector de voz
-    var speechSynth = window.speechSynthesis;
-    var isReading = false;
-
-    function readSlide() {
-        if (speechSynth.speaking) speechSynth.cancel();
-        var carousel = document.getElementById('carousel');
-        if (!carousel) return;
-        var idx = Math.round(carousel.scrollLeft / window.innerWidth);
-        var slide = document.querySelectorAll('.slide')[idx];
-        if (!slide) return;
-        var text = '';
-        var tag = slide.querySelector('.era-tag');
-        if (tag) text += tag.innerText + '. ';
-        var title = slide.querySelector('h2');
-        if (title) text += title.innerText + '. ';
-        var paragraphs = slide.querySelectorAll('p');
-        paragraphs.forEach(function(p) { text += p.innerText + ' '; });
-        text = text.replace(/\s+/g, ' ').trim();
-        if (!text) return;
-        var utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'es-MX';
-        utterance.rate = 1.1;
-        utterance.onend = function() { isReading = false; };
-        speechSynth.speak(utterance);
-        isReading = true;
-    }
-
-    function stopReading() {
-        if (speechSynth.speaking) speechSynth.cancel();
-        isReading = false;
-    }
-
-    // Carga inicial
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            var splash = document.getElementById('splash');
-            if (splash) {
-                splash.style.opacity = '0';
-                setTimeout(function() { splash.remove(); }, 300);
-            }
-            showTerms();
-        }, 300);
-    });
-
-    document.getElementById('readBtn').addEventListener('click', readSlide);
-    document.getElementById('stopBtn').addEventListener('click', stopReading);
-
-    // Admin
-    document.getElementById('adminUnlockBtn').addEventListener('click', function() {
-        var clave = prompt('Clave de administrador:');
-        if (clave === 'TechnoMaster2026') {
-            alert('Desbloqueado (simulado)');
-        } else if (clave !== null) {
-            alert('Clave incorrecta');
-        }
-    });
-
-    console.log('TeknoBiblik cargado correctamente');
-</script>
+<!-- ========== CARGA DEL ARCHIVO DE LÓGICA (app.js) ========== -->
+<script src="app.js"></script>
 </body>
 </html>
