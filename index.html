@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com;">
     <title>TeknoBiblik™ | Historia del Techno by LópezDjTools</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -93,7 +94,7 @@
         .voice-btn:hover { background: #00f0ff22; }
         .admin-btn { position: fixed; bottom: 20px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; z-index: 200; border-radius: 20px; }
         .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
-        /* Modal de términos (aparece tras 1 minuto) */
+        /* Modal de términos */
         .overlay {
             position: fixed;
             top: 0;
@@ -154,23 +155,29 @@
 </head>
 <body>
 
-<!-- Elementos flotantes (ocultos hasta aceptar) -->
 <div class="voice-buttons" style="display: none;" id="voiceButtons">
     <button id="readBtn" class="voice-btn">🔊 Leer</button>
     <button id="stopBtn" class="voice-btn">⏹️ Parar</button>
 </div>
 <div class="admin-btn" id="adminUnlockBtn" style="display: none;">🔓 Admin</div>
 
-<!-- Splash -->
 <div id="splash" class="splash">
     <h1>TeknoBiblik™</h1>
     <p>by LópezDjTools</p>
 </div>
 
-<!-- Carrusel (contenido principal) oculto hasta aceptar -->
+<div id="termsOverlay" class="overlay">
+    <div class="overlay-content">
+        <h2>Términos y Condiciones</h2>
+        <div class="legal-text">
+            Bienvenido a TeknoBiblik™. Al acceder a esta plataforma, aceptas el uso de herramientas de lectura de voz y la reproducción de contenido multimedia embebido desde servidores de terceros (YouTube). Este sitio es de carácter educativo e informativo sobre la historia de la música electrónica Techno. Todos los derechos de los videos y pistas musicales pertenecen a sus respectivos autores.
+        </div>
+        <button id="acceptTermsBtn">Aceptar y Entrar</button>
+    </div>
+</div>
+
 <div id="mainCarousel" style="display: none;">
     <div class="carousel" id="carousel">
-        <!-- SLIDE 1: 70s -->
         <div class="slide" data-index="0">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO I // FINALES DE LOS 70</span>
@@ -186,7 +193,6 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 2: 80s -->
         <div class="slide" data-index="1">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO II // DÉCADA DE LOS 80</span>
@@ -202,7 +208,6 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 3: 90s -->
         <div class="slide" data-index="2">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO III // DÉCADA DE LOS 90</span>
@@ -218,7 +223,6 @@
                 </div>
             </div>
         </div>
-        <!-- SLIDE 4: 2000s -->
         <div class="slide" data-index="3">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO IV // SIGLO XXI</span>
@@ -259,7 +263,6 @@
 
 <footer>TeknoBiblik™ by LópezDjTools | Licencia MIT</footer>
 
-<!-- ========== CARGA DEL ARCHIVO DE LÓGICA (app.js) ========== -->
-<script src="app.js"></script>
+<script src="ap.js"></script>
 </body>
 </html>
