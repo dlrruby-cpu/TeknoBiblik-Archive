@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be https://www.paypal.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be https://www.paypal.com https://www.paypal.me https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com;">
     
-    <!-- NUEVAS ETIQUETAS METADATOS PARA EL SEO DE GOOGLE -->
+    <!-- METADATOS SEO Y CONTACTO DE GOOGLE -->
     <meta name="description" content="TeknoBiblik™ por LópezDjTools. La enciclopedia y archivo digital definitivo sobre la historia del Techno, desde los 70 hasta la actualidad.">
-    <meta name="keywords" content="Techno, historia del techno, LópezDjTools, TeknoBiblik, Kraftwerk, Jeff Mills, Detroit, música electrónica, donaciones">
-    <meta name="author" content="LópezDjTools">
+    <meta name="keywords" content="Techno, historia del techno, LópezDjTools, TeknoBiblik, Kraftwerk, Jeff Mills, Detroit, música electrónica, Dalorex">
+    <meta name="author" content="LópezDjTools / Dalorex (dlrx75@gmail.com)">
+    <meta name="contact" content="dlr.ruby@gmail.com">
     
     <title>TeknoBiblik™ | Historia del Techno by LópezDjTools</title>
     <style>
@@ -16,7 +18,7 @@
         body {
             background: #0a0a0f;
             color: #e2e2e6;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
@@ -38,34 +40,43 @@
             flex-direction: column;
         }
         .splash h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             background: linear-gradient(135deg, #fff, #00f0ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .splash p {
             color: #00f0ff;
-            letter-spacing: 4px;
-            font-size: 0.8rem;
+            letter-spacing: 6px;
+            font-size: 1rem;
         }
-        /* Logo Superior Central */
+        
+        /* LOGO SUPERIOR CENTRAL - Rediseñado e Imponente */
         .header-logo {
             position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110px; /* Caja superior fija para albergar el logo grande */
             z-index: 4000;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.95) 70%, rgba(10,10,15,0));
             pointer-events: none;
+            padding: 15px 20px 5px 20px;
         }
         .header-logo img {
-            height: 65px;
+            height: 100%; /* Toma todo el alto disponible de su contenedor */
             width: auto;
+            max-width: 85vw; /* Evita que desborde en pantallas muy estrechas */
             display: block;
-            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.85));
+            pointer-events: auto; /* Permite interactuar con el logo si fuera necesario */
         }
+        
         /* Carrusel */
         .carousel {
             display: flex;
@@ -75,12 +86,10 @@
             scroll-behavior: smooth;
             height: 100vh;
             width: 100vw;
-            scrollbar-width: thin;
-            scrollbar-color: #00f0ff #1a1a2e;
+            scrollbar-width: none;
         }
-        .carousel::-webkit-scrollbar { height: 6px; }
-        .carousel::-webkit-scrollbar-track { background: #1a1a2e; }
-        .carousel::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; }
+        .carousel::-webkit-scrollbar { display: none; }
+        
         .slide {
             flex: 0 0 100%;
             scroll-snap-align: start;
@@ -88,105 +97,241 @@
             padding: 20px;
             background: #0d0d14;
             border-right: 1px solid #1f1f2a;
+            -webkit-overflow-scrolling: touch;
         }
-        .slide-content { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px 20px; }
-        .era-tag { color: #00f0ff; font-size: 0.8rem; letter-spacing: 3px; }
-        .slide h2 { font-size: 2rem; margin: 15px 0; color: white; }
-        .slide p { font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; text-align: justify; }
-        .artists { background: #050508; padding: 12px 15px; border-left: 3px solid #374151; margin: 15px 0; }
-        .artists h4 { font-size: 0.8rem; margin-bottom: 5px; }
-        .artists p { font-size: 0.85rem; margin: 0; }
-        .music-player { background: #000; border: 1px solid #2a2a35; padding: 15px; border-radius: 8px; margin: 15px 0; }
-        .music-player h5 { color: #00f0ff; font-size: 0.8rem; margin-bottom: 8px; }
-        .track-title { font-weight: bold; font-size: 1rem; }
-        .track-artist { color: #9ca3af; font-size: 0.8rem; margin-bottom: 12px; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 10px; }
+        .slide-content { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 130px 10px 240px 10px; /* Ajustado el padding superior para el logo gigante */
+        }
+        .era-tag { 
+            color: #00f0ff; 
+            font-size: 0.9rem; 
+            letter-spacing: 4px; 
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .slide h2 { 
+            font-size: 2.4rem; 
+            margin: 10px 0 20px 0; 
+            color: white; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        .slide p { 
+            font-size: 1.15rem; 
+            line-height: 1.6; 
+            color: #cbd5e1; 
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        .artists { 
+            background: #050508; 
+            padding: 16px; 
+            border-left: 4px solid #00f0ff; 
+            margin: 20px 0; 
+            border-radius: 4px;
+        }
+        .artists h4 { font-size: 1rem; color: #00f0ff; margin-bottom: 6px; letter-spacing: 1px; }
+        .artists p { font-size: 1.05rem; margin: 0; color: #fff; }
+        
+        /* Contenedores de Música */
+        .music-player { 
+            background: #000; 
+            border: 1px solid #00f0ff44; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .music-player h5 { color: #00f0ff; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .track-title { font-weight: bold; font-size: 1.3rem; color: #fff; }
+        .track-artist { color: #9ca3af; font-size: 1.05rem; margin-bottom: 15px; }
+        
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a35; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .video-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-        .video-link-btn { background: #18181f; color: #e2e2e6; padding: 6px 12px; text-decoration: none; font-size: 0.7rem; border: 1px solid #333; display: inline-block; }
-        .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; }
         
-        /* Botones de Navegación */
-        .nav-buttons { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 20px; z-index: 100; }
-        .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.9rem; }
-        .nav-btn:hover { background: #00f0ff22; }
-        .dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0faa; padding: 5px 12px; border-radius: 40px; }
-        .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
-        .dot.active { background: #00f0ff; box-shadow: 0 0 8px cyan; width: 20px; border-radius: 10px; }
+        .video-buttons { display: flex; gap: 12px; margin-top: 15px; }
+        .video-link-btn { 
+            background: #111; 
+            color: #e2e2e6; 
+            padding: 12px 20px; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            font-weight: bold;
+            border: 1px solid #333; 
+            display: inline-block; 
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+        }
+        .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; background: #00f0ff11; }
         
-        /* Interfaz Flotante Superior */
-        .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.7); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff33; }
-        .voice-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; border-radius: 30px; }
-        .voice-btn:hover { background: #00f0ff22; }
-        
-        /* Esquina Inferior Derecha (Admin) */
-        .admin-btn { position: fixed; bottom: 20px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; z-index: 200; border-radius: 20px; }
-        .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
-
-        /* Esquina Inferior Izquierda (Botón Donaciones) */
-        .donate-btn { 
+        /* NAVEGACIÓN INFERIOR */
+        .nav-buttons { 
             position: fixed; 
-            bottom: 20px; 
-            left: 20px; 
+            bottom: 85px; 
+            left: 0; 
+            right: 0; 
+            display: flex; 
+            justify-content: center; 
+            gap: 25px; 
+            z-index: 100; 
+            padding: 0 20px;
+        }
+        .nav-btn { 
+            background: rgba(17, 17, 17, 0.9); 
+            border: 2px solid #00f0ff; 
+            color: #00f0ff; 
+            padding: 14px 28px; 
+            cursor: pointer; 
+            border-radius: 12px; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            flex: 1;
+            max-width: 180px;
+            box-shadow: 0 4px 15px rgba(0,240,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+        .nav-btn:hover { background: #00f0ff22; }
+        
+        .dots { 
+            position: fixed; 
+            bottom: 155px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; 
+            gap: 14px; 
+            z-index: 99; 
+            background: rgba(10,10,15,0.85); 
+            padding: 8px 16px; 
+            border-radius: 40px; 
+            border: 1px solid #2a2a35;
+        }
+        .dot { width: 12px; height: 12px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .dot.active { background: #00f0ff; box-shadow: 0 0 10px cyan; width: 24px; border-radius: 10px; }
+        
+        /* INTERFAZ FLOTANTE SUPERIOR (Se superpone elegantemente en las esquinas) */
+        .voice-buttons { 
+            position: fixed; 
+            top: 20px; 
+            right: 15px; 
+            display: flex; 
+            gap: 8px; 
+            z-index: 4500; /* Por encima del degradado del logo */
+            background: rgba(10,10,15,0.85); 
+            padding: 6px 10px; 
+            border-radius: 12px; 
+            border: 1px solid #00f0ff33; 
+        }
+        .voice-btn { 
+            background: #111; 
+            border: 1px solid #00f0ff; 
+            color: #00f0ff; 
+            padding: 10px 14px; 
+            font-size: 0.9rem; 
+            font-weight: bold;
+            cursor: pointer; 
+            border-radius: 8px; 
+        }
+        
+        /* ACCIONES INFERIORES */
+        .bottom-bar-actions {
+            position: fixed;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 200;
+        }
+        .donate-btn { 
             background: #111; 
             color: #00f0ff; 
-            border: 1px solid #00f0ff; 
-            padding: 6px 14px; 
-            font-size: 0.7rem; 
+            border: 2px solid #00f0ff; 
+            padding: 14px 22px; 
+            font-size: 1rem; 
             text-decoration: none;
             cursor: pointer; 
-            z-index: 200; 
-            border-radius: 20px;
+            border-radius: 12px;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 5px;
-            box-shadow: 0 0 5px rgba(0, 240, 255, 0.2);
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
             transition: 0.2s;
         }
         .donate-btn:hover { 
             background: #00f0ff22;
-            box-shadow: 0 0 10px cyan;
-            transform: scale(1.05);
+            box-shadow: 0 0 20px cyan;
         }
+        .admin-btn { 
+            background: #111; 
+            color: #6b7280; 
+            border: 1px solid #374151; 
+            padding: 12px 18px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            border-radius: 12px; 
+            font-weight: bold;
+        }
+        .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
 
-        /* Modal de términos */
+        /* MODAL TÉRMINOS */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.96);
-            backdrop-filter: blur(12px);
+            background: rgba(0,0,0,0.97);
+            backdrop-filter: blur(15px);
             z-index: 6000;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 15px;
         }
         .overlay-content {
             background: #0d0d14;
             border: 2px solid #00f0ff;
-            padding: 30px;
+            padding: 30px 20px;
+            width: 100%;
             max-width: 500px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 16px;
             max-height: 90vh;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
-        .overlay-content h2 { color: #00f0ff; font-size: 1.6rem; }
-        .legal-text { font-size: 0.75rem; text-align: left; max-height: 300px; overflow-y: auto; border: 1px solid #2a2a35; padding: 15px; margin: 20px 0; background: #050508; border-radius: 6px; color: #9ca3af; line-height: 1.4; }
+        .overlay-content h2 { color: #00f0ff; font-size: 2rem; margin-bottom: 15px; }
+        .legal-text { 
+            font-size: 1rem; 
+            text-align: left; 
+            overflow-y: auto; 
+            border: 1px solid #2a2a35; 
+            padding: 15px; 
+            margin-bottom: 25px; 
+            background: #050508; 
+            border-radius: 8px; 
+            color: #9ca3af; 
+            line-height: 1.5;
+            flex-grow: 1;
+        }
         .overlay-content button {
             background: #00f0ff;
             color: #000;
             border: none;
-            padding: 12px 28px;
+            padding: 16px 32px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 1rem;
-            border-radius: 30px;
+            font-size: 1.2rem;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,240,255,0.4);
+            width: 100%;
         }
-        .overlay-content button:hover { transform: scale(1.02); box-shadow: 0 0 12px cyan; }
         
         footer {
             position: fixed;
@@ -194,44 +339,48 @@
             left: 0;
             width: 100%;
             text-align: center;
-            padding: 8px;
-            font-size: 0.6rem;
-            color: #4b5563;
-            background: #0a0a0faa;
-            z-index: 90;
+            padding: 4px;
+            font-size: 0.7rem;
+            color: #374151;
+            background: #0a0a0f;
+            z-index: 50;
+            border-top: 1px solid #111;
         }
-        @media (max-width: 700px) {
-            .slide h2 { font-size: 1.5rem; }
-            .nav-buttons { bottom: 70px; }
-            .dots { bottom: 70px; }
-            .voice-buttons { top: 15px; right: 10px; padding: 4px 8px; }
-            .voice-btn { padding: 4px 8px; font-size: 0.65rem; }
-            .admin-btn { bottom: 70px; right: 10px; }
-            .donate-btn { bottom: 70px; left: 10px; }
-            .header-logo img { height: 45px; }
-            .slide-content { padding-top: 85px; }
+
+        /* DISEÑO RESPONSIVE ADAPTADO PARA MÓVILES */
+        @media (max-width: 768px) {
+            .header-logo { height: 95px; padding: 12px 15px 3px 15px; }
+            .slide-content { padding-top: 115px; padding-bottom: 240px; }
+            .slide h2 { font-size: 2rem; }
+            .slide p { font-size: 1.1rem; }
+            .nav-buttons { bottom: 80px; gap: 15px; }
+            .dots { bottom: 150px; }
+            .bottom-bar-actions { bottom: 15px; }
+            .donate-btn { padding: 12px 18px; font-size: 0.95rem; }
+            .admin-btn { padding: 12px 14px; font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- Logo incrustado localmente -->
+<!-- Logo central con dimensiones aumentadas -->
 <div class="header-logo">
     <img src="logo.png" alt="TeknoBiblik Logo">
 </div>
 
-<!-- Elementos flotantes (ocultos hasta aceptar términos) -->
+<!-- Interfaz de Voz Fija -->
 <div class="voice-buttons" style="display: none;" id="voiceButtons">
     <button id="readBtn" class="voice-btn">🔊 Leer</button>
     <button id="stopBtn" class="voice-btn">⏹️ Parar</button>
 </div>
 
-<!-- Botón de Donaciones Flotante -->
-<a href="https://www.paypal.me/TU_USUARIO" target="_blank" class="donate-btn" id="donateBtn" style="display: none;">
-    ☕ Donar / Apoyar
-</a>
-
-<div class="admin-btn" id="adminUnlockBtn" style="display: none;">🔓 Admin</div>
+<!-- Acciones de barra inferior fijas -->
+<div class="bottom-bar-actions">
+    <a href="https://www.paypal.me/DAVIDLOPEZDALOREX" target="_blank" class="donate-btn" id="donateBtn" style="display: none;">
+        ☕ Donar / Apoyar
+    </a>
+    <div class="admin-btn" id="adminUnlockBtn" style="display: none;">🔓 Admin</div>
+</div>
 
 <!-- Splash Inicial -->
 <div id="splash" class="splash">
@@ -239,10 +388,10 @@
     <p>by LópezDjTools</p>
 </div>
 
-<!-- Modal de Términos Legales Obligatorio y Corregido -->
+<!-- Modal de Términos Legales -->
 <div id="termsOverlay" class="overlay">
     <div class="overlay-content">
-        <h2>Aviso Legal y Condiciones</h2>
+        <h2>Aviso Legal y Conditions</h2>
         <div class="legal-text">
             <strong>1. Objeto Informativo y Sostenibilidad:</strong> TeknoBiblik™ es un archivo digital de carácter educativo y documental enfocado en la divulgación de la historia de la música electrónica Techno. Es un proyecto independiente financiado de forma voluntaria por su comunidad de usuarios para cubrir costes de desarrollo y mantenimiento.<br><br>
             <strong>2. Derechos de Terceros:</strong> Los contenidos multimedia, pistas de audio y vídeos embebidos en esta plataforma son propiedad exclusiva de sus respectivos autores y discográficas. Este sitio utiliza enlaces y reproductores oficiales mediante la API pública de YouTube, respetando la propiedad intelectual.<br><br>
@@ -252,7 +401,7 @@
     </div>
 </div>
 
-<!-- Carrusel -->
+<!-- Carrusel Principal -->
 <div id="mainCarousel" style="display: none;">
     <div class="carousel" id="carousel">
         <!-- SLIDE 1: 70s -->
@@ -335,6 +484,7 @@
         </div>
     </div>
 
+    <!-- Navegación -->
     <div class="nav-buttons">
         <button class="nav-btn" id="prevBtn">◀ Anterior</button>
         <button class="nav-btn" id="nextBtn">Siguiente ▶</button>
@@ -342,7 +492,7 @@
     <div class="dots" id="dotsContainer"></div>
 </div>
 
-<footer>TeknoBiblik™ by LópezDjTools | Licencia MIT</footer>
+<footer>TeknoBiblik™ | Licencia MIT</footer>
 
 <script src="ap.js"></script>
 </body>
