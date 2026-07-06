@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be https://www.paypal.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com;">
+    
+    <!-- NUEVAS ETIQUETAS METADATOS PARA EL SEO DE GOOGLE -->
+    <meta name="description" content="TeknoBiblik™ por LópezDjTools. La enciclopedia y archivo digital definitivo sobre la historia del Techno, desde los 70 hasta la actualidad.">
+    <meta name="keywords" content="Techno, historia del techno, LópezDjTools, TeknoBiblik, Kraftwerk, Jeff Mills, Detroit, música electrónica, donaciones">
+    <meta name="author" content="LópezDjTools">
+    
     <title>TeknoBiblik™ | Historia del Techno by LópezDjTools</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,6 +50,22 @@
             letter-spacing: 4px;
             font-size: 0.8rem;
         }
+        /* Logo Superior Central */
+        .header-logo {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4000;
+            text-align: center;
+            pointer-events: none;
+        }
+        .header-logo img {
+            height: 65px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
+        }
         /* Carrusel */
         .carousel {
             display: flex;
@@ -67,7 +89,7 @@
             background: #0d0d14;
             border-right: 1px solid #1f1f2a;
         }
-        .slide-content { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .slide-content { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px 20px; }
         .era-tag { color: #00f0ff; font-size: 0.8rem; letter-spacing: 3px; }
         .slide h2 { font-size: 2rem; margin: 15px 0; color: white; }
         .slide p { font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; text-align: justify; }
@@ -83,17 +105,51 @@
         .video-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
         .video-link-btn { background: #18181f; color: #e2e2e6; padding: 6px 12px; text-decoration: none; font-size: 0.7rem; border: 1px solid #333; display: inline-block; }
         .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; }
+        
+        /* Botones de Navegación */
         .nav-buttons { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 20px; z-index: 100; }
         .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.9rem; }
         .nav-btn:hover { background: #00f0ff22; }
         .dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0faa; padding: 5px 12px; border-radius: 40px; }
         .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
         .dot.active { background: #00f0ff; box-shadow: 0 0 8px cyan; width: 20px; border-radius: 10px; }
+        
+        /* Interfaz Flotante Superior */
         .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.7); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff33; }
         .voice-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; border-radius: 30px; }
         .voice-btn:hover { background: #00f0ff22; }
+        
+        /* Esquina Inferior Derecha (Admin) */
         .admin-btn { position: fixed; bottom: 20px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; z-index: 200; border-radius: 20px; }
         .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
+
+        /* Esquina Inferior Izquierda (Botón Donaciones) */
+        .donate-btn { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 20px; 
+            background: #111; 
+            color: #00f0ff; 
+            border: 1px solid #00f0ff; 
+            padding: 6px 14px; 
+            font-size: 0.7rem; 
+            text-decoration: none;
+            cursor: pointer; 
+            z-index: 200; 
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 0 5px rgba(0, 240, 255, 0.2);
+            transition: 0.2s;
+        }
+        .donate-btn:hover { 
+            background: #00f0ff22;
+            box-shadow: 0 0 10px cyan;
+            transform: scale(1.05);
+        }
+
         /* Modal de términos */
         .overlay {
             position: fixed;
@@ -119,7 +175,7 @@
             overflow-y: auto;
         }
         .overlay-content h2 { color: #00f0ff; font-size: 1.6rem; }
-        .legal-text { font-size: 0.75rem; text-align: left; max-height: 300px; overflow-y: auto; border: 1px solid #2a2a35; padding: 15px; margin: 20px 0; background: #050508; border-radius: 6px; }
+        .legal-text { font-size: 0.75rem; text-align: left; max-height: 300px; overflow-y: auto; border: 1px solid #2a2a35; padding: 15px; margin: 20px 0; background: #050508; border-radius: 6px; color: #9ca3af; line-height: 1.4; }
         .overlay-content button {
             background: #00f0ff;
             color: #000;
@@ -131,6 +187,7 @@
             border-radius: 30px;
         }
         .overlay-content button:hover { transform: scale(1.02); box-shadow: 0 0 12px cyan; }
+        
         footer {
             position: fixed;
             bottom: 0;
@@ -147,37 +204,58 @@
             .slide h2 { font-size: 1.5rem; }
             .nav-buttons { bottom: 70px; }
             .dots { bottom: 70px; }
-            .voice-buttons { top: 10px; right: 10px; padding: 4px 8px; }
+            .voice-buttons { top: 15px; right: 10px; padding: 4px 8px; }
             .voice-btn { padding: 4px 8px; font-size: 0.65rem; }
-            .admin-btn { bottom: 70px; }
+            .admin-btn { bottom: 70px; right: 10px; }
+            .donate-btn { bottom: 70px; left: 10px; }
+            .header-logo img { height: 45px; }
+            .slide-content { padding-top: 85px; }
         }
     </style>
 </head>
 <body>
 
+<!-- Logo incrustado localmente -->
+<div class="header-logo">
+    <img src="logo.png" alt="TeknoBiblik Logo">
+</div>
+
+<!-- Elementos flotantes (ocultos hasta aceptar términos) -->
 <div class="voice-buttons" style="display: none;" id="voiceButtons">
     <button id="readBtn" class="voice-btn">🔊 Leer</button>
     <button id="stopBtn" class="voice-btn">⏹️ Parar</button>
 </div>
+
+<!-- Botón de Donaciones Flotante -->
+<a href="https://www.paypal.me/TU_USUARIO" target="_blank" class="donate-btn" id="donateBtn" style="display: none;">
+    ☕ Donar / Apoyar
+</a>
+
 <div class="admin-btn" id="adminUnlockBtn" style="display: none;">🔓 Admin</div>
 
+<!-- Splash Inicial -->
 <div id="splash" class="splash">
     <h1>TeknoBiblik™</h1>
     <p>by LópezDjTools</p>
 </div>
 
+<!-- Modal de Términos Legales Obligatorio y Corregido -->
 <div id="termsOverlay" class="overlay">
     <div class="overlay-content">
-        <h2>Términos y Condiciones</h2>
+        <h2>Aviso Legal y Condiciones</h2>
         <div class="legal-text">
-            Bienvenido a TeknoBiblik™. Al acceder a esta plataforma, aceptas el uso de herramientas de lectura de voz y la reproducción de contenido multimedia embebido desde servidores de terceros (YouTube). Este sitio es de carácter educativo e informativo sobre la historia de la música electrónica Techno. Todos los derechos de los videos y pistas musicales pertenecen a sus respectivos autores.
+            <strong>1. Objeto Informativo y Sostenibilidad:</strong> TeknoBiblik™ es un archivo digital de carácter educativo y documental enfocado en la divulgación de la historia de la música electrónica Techno. Es un proyecto independiente financiado de forma voluntaria por su comunidad de usuarios para cubrir costes de desarrollo y mantenimiento.<br><br>
+            <strong>2. Derechos de Terceros:</strong> Los contenidos multimedia, pistas de audio y vídeos embebidos en esta plataforma son propiedad exclusiva de sus respectivos autores y discográficas. Este sitio utiliza enlaces y reproductores oficiales mediante la API pública de YouTube, respetando la propiedad intelectual.<br><br>
+            <strong>3. Herramientas del Sitio:</strong> Al aceptar, consientes la ejecución de scripts interactivos de navegación, el uso opcional de la herramienta integrada de lectura artificial de voz (Text-to-Speech) de tu dispositivo, y la carga de estilos de optimización global.
         </div>
         <button id="acceptTermsBtn">Aceptar y Entrar</button>
     </div>
 </div>
 
+<!-- Carrusel -->
 <div id="mainCarousel" style="display: none;">
     <div class="carousel" id="carousel">
+        <!-- SLIDE 1: 70s -->
         <div class="slide" data-index="0">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO I // FINALES DE LOS 70</span>
@@ -193,6 +271,7 @@
                 </div>
             </div>
         </div>
+        <!-- SLIDE 2: 80s -->
         <div class="slide" data-index="1">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO II // DÉCADA DE LOS 80</span>
@@ -208,6 +287,7 @@
                 </div>
             </div>
         </div>
+        <!-- SLIDE 3: 90s -->
         <div class="slide" data-index="2">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO III // DÉCADA DE LOS 90</span>
@@ -223,6 +303,7 @@
                 </div>
             </div>
         </div>
+        <!-- SLIDE 4: 2000s -->
         <div class="slide" data-index="3">
             <div class="slide-content">
                 <span class="era-tag">CAPÍTULO IV // SIGLO XXI</span>
