@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dotsContainer = document.getElementById('dotsContainer');
     const voiceButtons = document.getElementById('voiceButtons');
     const adminUnlockBtn = document.getElementById('adminUnlockBtn');
+    const donateBtn = document.getElementById('donateBtn'); // Elemento de donación vinculado
     const readBtn = document.getElementById('readBtn');
     const stopBtn = document.getElementById('stopBtn');
 
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mainCarousel.style.display = 'block';
             voiceButtons.style.display = 'flex';
             adminUnlockBtn.style.display = 'block';
+            if (donateBtn) donateBtn.style.display = 'flex'; // Activa el botón de donaciones al entrar
             updateCarousel();
         });
     }
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Bucle al inicio
+                currentIndex = 0; 
             }
             updateCarousel();
         });
@@ -100,13 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Bucle al final
+                currentIndex = slides.length - 1; 
             }
             updateCarousel();
         });
     }
 
-    // --- Ajuste en cambios de tamaño de pantalla ---
     window.addEventListener('resize', updateCarousel);
 
     // --- Control de Lectura de Voz (Text-to-Speech) ---
@@ -114,12 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
         readBtn.addEventListener('click', () => {
             if (!synth) return alert('Tu navegador no soporta síntesis de voz.');
 
-            // Si ya está hablando, detenerlo antes de reiniciar
             if (synth.speaking) {
                 synth.cancel();
             }
 
-            // Capturar texto solo del slide visible
             const currentSlideText = slides[currentIndex].querySelector('p').innerText;
             const currentSlideTitle = slides[currentIndex].querySelector('h2').innerText;
             
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Evento Simbólico para el botón Admin ---
+    // --- Evento de Admin ---
     if (adminUnlockBtn) {
         adminUnlockBtn.addEventListener('click', () => {
             alert('Acceso al sistema TeknoBiblik™ verificado. Modo administrador activo (LópezDjTools).');
