@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.youtube.com https://youtu.be; style-src 'self' 'unsafe-inline' https://www.gstatic.com; frame-src https://www.youtube.com https://youtu.be; script-src 'self'">
     <title>TeknoBiblik™ | Historia del Techno by LópezDjTools</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +32,7 @@
             flex-direction: column;
         }
         .splash h1 {
-            font-size: 3.5rem; /* Texto de splash ligeramente más grande */
+            font-size: 3.5rem;
             background: linear-gradient(135deg, #fff, #00f0ff);
             -webkit-background-clip: text;
             background-clip: text;
@@ -47,7 +47,7 @@
         /* Carrusel */
         .carousel {
             display: flex;
-            overflow-x: hidden; /* Evita desajustes por swipe imprevisto en móviles */
+            overflow-x: hidden;
             overflow-y: hidden;
             scroll-behavior: smooth;
             height: 100vh;
@@ -58,14 +58,13 @@
             width: 100vw;
             height: 100vh;
             overflow-y: auto;
-            padding: 20px 20px 100px 20px; /* Margen inferior para que los controles no solapen */
+            padding: 20px 20px 100px 20px;
             background: #0d0d14;
             border-right: 1px solid #1f1f2a;
         }
         .slide-content { max-width: 950px; margin: 0 auto; padding: 20px; }
         .era-tag { color: #00f0ff; font-size: 0.9rem; letter-spacing: 3px; font-weight: bold; }
         
-        /* Aprovechamiento de pantalla y textos ampliados */
         .slide h2 { font-size: 2.5rem; margin: 20px 0 15px 0; color: white; border-bottom: 1px solid #1f1f2a; padding-bottom: 5px; }
         .slide p { font-size: 1.15rem; line-height: 1.7; color: #cbd5e1; text-align: justify; margin-bottom: 15px; }
         
@@ -85,59 +84,69 @@
         .video-link-btn { background: #18181f; color: #e2e2e6; padding: 8px 16px; text-decoration: none; font-size: 0.8rem; border: 1px solid #333; display: inline-block; border-radius: 4px; transition: 0.2s; }
         .video-link-btn:hover { border-color: #00f0ff; color: #00f0ff; background: #00f0ff11; }
         
-        /* Sección de Donaciones en Estética Cyberpunk */
+        /* Sección de Donaciones - Minimalista */
         .donation-box {
-            background: linear-gradient(135deg, #0f0f1a, #150526);
-            border: 2px dashed #00f0ff;
-            padding: 25px;
-            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
             margin: 35px 0;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+            padding: 20px;
         }
-        .donation-box h3 { color: #fff; font-size: 1.4rem; margin-bottom: 10px; }
-        .donation-box p { font-size: 1rem !important; text-align: center !important; color: #a1a1aa !important; }
-        .donation-btn {
+        .donation-box p {
+            font-size: 0.9rem !important;
+            color: #a1a1aa !important;
+            text-align: left !important;
+            margin: 0 !important;
+            flex: 1;
+            max-width: 400px;
+        }
+        .donation-coffee-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: #00f0ff;
-            color: #000;
-            font-weight: bold;
-            padding: 12px 30px;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid #00f0ff;
+            color: #00f0ff;
+            padding: 10px 16px;
             text-decoration: none;
-            border-radius: 30px;
-            font-size: 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
             transition: 0.3s;
-            box-shadow: 0 0 10px rgba(0,240,255,0.4);
-            border: none;
             cursor: pointer;
+            flex-shrink: 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        .donation-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px cyan;
-            background: #fff;
+        .donation-coffee-btn:hover {
+            background: #00f0ff11;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .donation-coffee-btn:active {
+            transform: translateY(0);
         }
 
         /* Controles Coherentes */
         .nav-buttons { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; gap: 180px; z-index: 100; pointer-events: none; }
         .nav-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 20px; cursor: pointer; border-radius: 30px; font-size: 0.95rem; pointer-events: auto; transition: 0.2s; }
         .nav-btn:hover { background: #00f0ff22; box-shadow: 0 0 8px #00f0ff66; }
-        .dots { position: fixed; bottom: 27px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0fcc; padding: 6px 16px; border-radius: 40px; border: 1px solid #2a2a35; }
+        .dots { position: fixed; bottom: 27px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 99; background: #0a0a0fcc; padding: 6px 16px; border-radius: 40px; border: 1px solid #1f1f2a; }
         .dot { width: 10px; height: 10px; background: #555; border-radius: 50%; cursor: pointer; transition: 0.2s; }
         .dot.active { background: #00f0ff; box-shadow: 0 0 8px cyan; width: 22px; border-radius: 10px; }
         
-        .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.8); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff33; }
+        .voice-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 200; background: rgba(10,10,15,0.8); padding: 8px 12px; border-radius: 40px; border: 1px solid #00f0ff; }
         .voice-btn { background: #111; border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; border-radius: 30px; }
         .voice-btn:hover { background: #00f0ff22; }
-        .admin-btn { position: fixed; bottom: 25px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; z-index: 200; border-radius: 20px; }
+        .admin-btn { position: fixed; bottom: 25px; right: 20px; background: #111; color: #555; border: 1px solid #333; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; z-index: 200; border-radius: 30px; transition: 0.2s; }
         .admin-btn:hover { color: #00f0ff; border-color: #00f0ff; }
         
         /* Modales */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 6000; display: flex; align-items: center; justify-content: center; }
         .overlay-content { background: #0d0d14; border: 2px solid #00f0ff; padding: 30px; max-width: 500px; text-align: center; border-radius: 8px; max-height: 90vh; overflow-y: auto; }
         .overlay-content h2 { color: #00f0ff; font-size: 1.6rem; }
-        .legal-text { font-size: 0.8rem; text-align: left; max-height: 280px; overflow-y: auto; border: 1px solid #2a2a35; padding: 15px; margin: 20px 0; background: #050508; border-radius: 6px; line-height: 1.45; color: #9ca3af; }
+        .legal-text { font-size: 0.8rem; text-align: left; max-height: 280px; overflow-y: auto; border: 1px solid #2a2a35; padding: 15px; margin: 20px 0; background: #050508; border-radius: 6px; line-height: 1.5; }
         .overlay-content button { background: #00f0ff; color: #000; border: none; padding: 12px 28px; font-weight: bold; cursor: pointer; font-size: 1rem; border-radius: 30px; }
         .overlay-content button:hover { transform: scale(1.02); box-shadow: 0 0 12px cyan; }
         
@@ -150,6 +159,19 @@
             .dots { bottom: 70px; }
             .admin-btn { bottom: 70px; }
             .slide { padding-bottom: 140px; }
+            .donation-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .donation-box p {
+                max-width: 100%;
+                font-size: 0.85rem;
+            }
+            .donation-coffee-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -170,7 +192,7 @@
     <div class="overlay-content">
         <h2>Términos y Condiciones</h2>
         <div class="legal-text">
-            Bienvenido a TeknoBiblik™. Al acceder a esta plataforma, aceptas el uso de herramientas de lectura de voz y la reproducción de contenido multimedia embebido desde servidores de terceros (YouTube). Este sitio es de carácter educativo e informativo sobre la historia de la música electrónica Techno. Todos los derechos de los videos y pistas musicales pertenecen a sus respectivos autores. El sitio admite el apoyo económico voluntario mediante donativos destinados exclusivamente al mantenimiento de los servidores y el desarrollo técnico de la plataforma, sin constituir actividad de lucro comercial.
+            Bienvenido a TeknoBiblik™. Al acceder a esta plataforma, aceptas el uso de herramientas de lectura de voz y la reproducción de contenido multimedia embebido desde servidores de terceros. Todos los videos están vinculados a través de YouTube. Respetamos tu privacidad y tu experiencia de usuario.
         </div>
         <button id="acceptTermsBtn">Aceptar y Entrar</button>
     </div>
@@ -184,7 +206,7 @@
                 <span class="era-tag">CAPÍTULO I // FINALES DE LOS 70</span>
                 <h2>La Fundación Prototípica</h2>
                 <div class="speech-target">
-                    <p>El techno no nació en el vacío; fue la respuesta humana a la automatización. En Detroit, la juventud afroamericana sintonizaba el programa de radio de <strong>The Electrifying Mojo</strong>, que emitía funk, pop y la fría precisión electrónica de los alemanes <strong>Kraftwerk</strong>. Al mismo tiempo, Giorgio Moroder y Donna Summer demostraban el poder de los sintetizadores.</p>
+                    <p>El techno no nació en el vacío; fue la respuesta humana a la automatización. En Detroit, la juventud afroamericana sintonizaba el programa de radio de The Electrifying Mojo. Las máquinas sintetizadoras Moog y ARP fueron sus instrumentos de liberación. El sonido puro, repetitivo y obsesivo emergía como himno de resistencia urbana.</p>
                 </div>
                 <div class="artists"><h4>Pioneros:</h4><p>Kraftwerk, Giorgio Moroder, Yellow Magic Orchestra</p></div>
                 
@@ -211,7 +233,7 @@
                 <span class="era-tag">CAPÍTULO II // DÉCADA DE LOS 80</span>
                 <h2>The Belleville Three</h2>
                 <div class="speech-target">
-                    <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR‑808 y TR‑909. Atkins, como Model 500, lanzó "No UFOs" en 1985. El sonido combinaba alienación urbana con funk, bautizado como "Techno".</p>
+                    <p>Juan Atkins, Derrick May y Kevin Saunderson usaron cajas de ritmos Roland TR‑808 y TR‑909. Atkins, como Model 500, lanzó "No UFOs" en 1985. El sonido combinaba alienación futurista con la dureza del midwest industrial. Las frecuencias bajas golpeaban como máquinas de fábrica. Detroit se convirtió en la meca del sonido electrónico revolucionario.</p>
                 </div>
                 <div class="artists"><h4>La Trinidad:</h4><p>Juan Atkins, Derrick May, Kevin Saunderson</p></div>
                 <div class="music-player">
@@ -229,7 +251,7 @@
                 <span class="era-tag">CAPÍTULO III // DÉCADA DE LOS 90</span>
                 <h2>Underground Resistance</h2>
                 <div class="speech-target">
-                    <p>El colectivo Underground Resistance (UR) radicalizó el movement con pasamontañas, producciones crudas de Jeff Mills y Robert Hood. El techno se expandió por Europa tras la caída del Muro de Berlín.</p>
+                    <p>El colectivo Underground Resistance (UR) radicalizó el movimiento con pasamontañas, producciones crudas de Jeff Mills y Robert Hood. El techno se expandió por Europa tras la caída del muro de Berlín. Raves clandestinas, fiestas free parties, resistencia a la comercialización. El techno era acción política, lucha contra el sistema.</p>
                 </div>
                 <div class="artists"><h4>Arquitectos:</h4><p>Jeff Mills, Robert Hood, Mike Banks</p></div>
                 <div class="music-player">
@@ -247,7 +269,7 @@
                 <span class="era-tag">CAPÍTULO IV // SIGLO XXI</span>
                 <h2>La Conquista Global</h2>
                 <div class="speech-target">
-                    <p>El techno se consolidó internacionalmente. Himnos como "Born Slippy" de Underworld, "Energy Flash" de Joey Beltram y "Crispy Bacon" de Laurent Garnier trascendieron fronteras.</p>
+                    <p>El techno se consolidó internacionalmente. Himnos como "Born Slippy" de Underworld, "Energy Flash" de Joey Beltram y "Crispy Bacon" de Laurent Garnier trascendieron fronteras. Festivales masivos, radio, streaming. El sonido que nació en sótanos deprimidos ahora llena estadios. La máquina sigue latiendo, el futuro continúa.</p>
                 </div>
                 <div class="artists"><h4>Embajadores:</h4><p>Underworld, Laurent Garnier, Richie Hawtin</p></div>
                 <div class="music-player">
@@ -273,15 +295,13 @@
                 </div>
 
                 <div class="donation-box">
-                    <h3>☕ Apoya el proyecto TeknoBiblik™</h3>
-                    <p>Si valoras esta enciclopedia interactiva del Techno, puedes invitarnos a un café o hacer una donación para mantener los servidores libres de publicidad masiva.</p>
-                    <br>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <p>Si disfrutaste de TeknoBiblik™, considera apoyar el proyecto:</p>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin: 0;">
                         <input type="hidden" name="cmd" value="_donations" />
                         <input type="hidden" name="business" value="dlr.ruby@gmai.com" />
                         <input type="hidden" name="item_name" value="Soporte y Donación a TeknoBiblik de LópezDjTools" />
                         <input type="hidden" name="currency_code" value="EUR" />
-                        <button type="submit"☕ Invitar a un café (PayPal)</button>
+                        <button type="submit" class="donation-coffee-btn">☕ Invita un café</button>
                     </form>
                 </div>
 
